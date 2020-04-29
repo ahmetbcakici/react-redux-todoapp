@@ -1,6 +1,8 @@
 import React,{useState} from 'react'
+import {connect} from 'react-redux';
+import {addTodo} from '../redux/actions';
 
-export default function AddToDo({addTodo}) {
+function AddToDo({addTodo}) {
     const [content, setContent] = useState('')
 
     return (
@@ -10,3 +12,9 @@ export default function AddToDo({addTodo}) {
         </div>
     )
 }
+
+const mapDispatchToProps = {
+    addTodo
+}
+
+export default connect(null, mapDispatchToProps)(AddToDo);

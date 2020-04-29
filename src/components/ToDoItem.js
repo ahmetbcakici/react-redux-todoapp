@@ -1,7 +1,25 @@
-import React from 'react'
+import React from 'react';
+import {connect} from 'react-redux';
+import {toggleTodo, deleteTodo} from '../redux/actions';
 
-export default function ToDoItem({todo,toggle}) {
-    return (
-    <p style={{color:todo.completed ? 'green' : 'red'}} onClick={() => toggle(todo.id)}>{todo.content}</p>
-    )
+function ToDoItem({todo, toggleTodo,deleteTodo}) {
+  return (
+      <div>
+    <p
+      style={{color: todo.completed ? 'green' : 'red'}}
+      onClick={() => toggleTodo(todo.id)}
+    >
+      {todo.content}
+      
+    </p>
+    <span onClick={() => deleteTodo(todo.id)}>SİL</span>
+    </div>
+  );
 }
+
+const mapDispatchToProps = {
+  toggleTodo,
+  deleteTodo
+};
+
+export default connect(null, mapDispatchToProps)(ToDoItem);

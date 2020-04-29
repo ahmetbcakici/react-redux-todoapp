@@ -24,12 +24,15 @@ export const todoReducer = (state = initialToDo, action) => {
         {id: Math.random(), content: payload, completed: false},
       ];
     case 'TOGGLE_TODO':
-      return state.filter((todo) => {
-          if (todo.id === payload) todo.completed = !todo.completed;
-          return todo;
-        })
-      
-
+      console.log('toggle case');
+      return state.map((todo) => {
+        if (todo.id === payload) {
+          return {...todo, completed: !todo.completed};
+        }
+        return todo;
+      });
+    case 'DELETE_TODO':
+      return state.filter((todo) => todo.id !== payload);
     default:
       return state;
   }
