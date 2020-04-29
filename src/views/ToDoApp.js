@@ -1,48 +1,37 @@
-import React,{useState} from 'react'
-import AddToDo from '../components/AddToDo'
-import Todos from '../components/Todos'
+import React, {useState} from 'react';
+import AddToDo from '../components/AddToDo';
+import Todos from '../components/Todos';
+import {connect} from 'react-redux';
+import {addTodo,toggleTodo} from '../redux/actions';
 
-export default function ToDoApp() {
-    const [todos, setTodos] = useState([
-        {
-            id:1,
-            content:'Learn React',
-            completed:false
-        },
-        {
-            id:2,
-            content:'Learn Redux',
-            completed:false
-        },
-        {
-            id:3,
-            content:'Learn Node',
-            completed:true
-        },
-    ])
+function ToDoApp({todos, addTodo,toggleTodo}) {
+ /* const toggleTodo = (id) => {
+    /*  console.log(id);
+    setTodos(
+      todos.filter((todo) => {
+        if (todo.id === id) todo.completed = !todo.completed;
+        return todo;
+      })
+    );
+  };*/
 
-    const addTodo = (content) => {
-        const newTodo = {
-            id:todos.length + 1,
-            content,
-            completed:false
-        }
-        setTodos([...todos,newTodo])
-    }
-
-    const toggleTodo = id => {
-        console.log(id)
-        setTodos(todos.filter(todo => {
-            if(todo.id === id) todo.completed = !todo.completed;
-            return todo;
-        }))
-    }
-
-
-    return (
-        <div style={{padding:'30px'}}>
-        <AddToDo addTodo={addTodo}/>
-        <Todos todos={todos} toggle={toggleTodo}/>
-        </div>
-    )
+  return (
+    <div style={{padding: '30px'}}>
+      <AddToDo addTodo={addTodo} />
+      <Todos todos={todos} toggle={toggleTodo} />
+    </div>
+  );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    todos: state.todoReducer,
+  };
+};
+
+const mapDispatchToProps = {
+    addTodo,
+    toggleTodo,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ToDoApp);
